@@ -5,6 +5,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider} from "native-base";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Home from "./screens/home";
+import Absen from "./screens/absen";
+import Riwayat from "./screens/riwayat";
+import Profile from "./screens/profile";
+import EditProfil from "./screens/editProfile";
+import Login from "./screens/login/login";
+import Register from "./screens/login/register";
+
 // Navigator Declaration
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -20,32 +27,16 @@ const Tabs = () => {
           switch (route.name) {
             case "Home":
               iconName = "home";
-                color="lightblue" ;
+                color="white" ;
               break;
-            case "Favorit":
-              iconName = "heart";
-              color="lightblue" ;
-              break;
-            case "Berita":
-              iconName = "newspaper-outline";
-              color="lightblue" ;
+            case "Riwayat":
+              iconName = "newspaper";
+              color="white" ;
               break;
             case "Profile":
               iconName = "person-circle";
-              color="lightblue" ;
+              color="white" ;
               break;
-            case "AddWisata":
-              iconName = "cloud-upload-outline";
-              color="lightblue" ;
-              break;
-            case "AddBarang":
-              iconName = "cloud-upload-outline";
-              color="lightblue" ;
-              break;
-              case "AddBerita":
-                iconName = "cloud-upload-outline";
-                color="lightblue" ;
-                break;
           }
           return (
             <Ionicons
@@ -57,7 +48,7 @@ const Tabs = () => {
         },
         tabBarIconStyle: { marginTop: 5 },
         tabBarStyle: {
-          backgroundColor:"#0383A2",
+          backgroundColor: '#6C6DFB',
           height: 70,
           borderTopWidth: 0,
           borderTopRightRadius: 10,
@@ -68,6 +59,9 @@ const Tabs = () => {
       })}
     >
       <Tab.Screen name="Home" component={Home} options={noHead} />
+      <Tab.Screen name="Riwayat" component={Riwayat} options={noHead} />
+      <Tab.Screen name="Profile" component={Profile} options={noHead}/>
+      
     </Tab.Navigator>
   );
 };
@@ -77,8 +71,11 @@ const App = () => {
     <NativeBaseProvider>
       <NavigationContainer>
         <Stack.Navigator>    
-        
+          <Stack.Screen name="Login" component={Login} options={noHead} />
+          <Stack.Screen name="Register" component={Register} options={noHead}/>
           <Stack.Screen name="Tabs" component={Tabs} options={noHead}/>
+          <Stack.Screen name="Absen" component={Absen} />
+          <Stack.Screen name="Edit Profil" component={EditProfil} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

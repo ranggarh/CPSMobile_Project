@@ -1,0 +1,141 @@
+import { Box, Heading, ScrollView, Text, Image, VStack, Pressable, Avatar,Modal, HStack, Button} from "native-base";
+import { ImageBackground, StatusBar } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { logoutUser } from "../src/actions/auth_actions";
+import { useState,useEffect } from "react";
+
+const Profile = () =>{
+    const navigation = useNavigation();
+    const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
+
+    const handleLogout = () => {
+        setIsLogoutModalVisible(true);
+    };
+
+      const confirmLogout = () => {
+        // Call your logout function here
+        // For example: logoutUser();
+        // Then navigate to the login screen
+        logoutUser();
+        {console.log('Log Out Berhasil')}
+        navigation.navigate("Login");
+      };
+
+      const closeLogoutModal = () => {
+        setIsLogoutModalVisible(false);
+      };
+
+    return(
+        <ScrollView backgroundColor={'white'}>
+        <StatusBar backgroundColor={'white'} barStyle="dark-content"/>
+        <Box padding={5}>
+                <Heading fontSize={18} >Profile Saya</Heading>
+            </Box>
+        <Box m={4} mt={1} flexDirection={"row"} backgroundColor={'#D8CCFE'} borderRadius={10} >
+            <Box flex={1} height={150}  borderRadius={10}>
+                <Avatar mt={'3.5'} alignSelf={'center'} size="120" bg="blue.500" source={require("../assets/profile.png")}/>
+            </Box>
+            <Box flexDirection={'column'} alignSelf={'center'}>
+                <Text fontSize={12}>Centralindo Staff</Text>
+                <Text fontWeight={'bold'} mb={2} numberOfLines={1} ellipsizeMode="tail" style={{ maxWidth: '75%' }}>Rangga Raditya Hariyanto</Text>
+                <Box  p={2} backgroundColor={'white'} width={'75'} borderRadius={5}>
+                    <Text alignSelf={'center'} fontWeight={'bold'}>Staff IT</Text>
+                </Box>
+            </Box>
+        </Box>
+        <Heading m={4} mt={1} fontSize={16}>Menu Profil</Heading>
+        <ScrollView backgroundColor={'white'}>
+            <VStack space={2} >
+                <Pressable onPress={() =>{navigation.navigate('Edit Profil')} }>
+                <ImageBackground
+                    source={require('../assets/gradient_blue.jpg')}
+                    style={{ padding:20, borderRadius: 10, marginHorizontal: 15}}
+                    imageStyle={{ borderRadius: 10 }}
+                    
+                >
+                <Box flexDirection={'row'}>
+                    <Image source={require('../assets/icon/icon_profil.png')} alt="icon-profil"></Image>
+                    <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">Edit Profil</Text>
+                </Box>
+                </ImageBackground>
+                </Pressable>
+
+                <Pressable>
+                <ImageBackground
+                    source={require('../assets/gradient_blue.jpg')}
+                    style={{ padding:20, borderRadius: 10, marginHorizontal: 15}}
+                    imageStyle={{ borderRadius: 10 }}
+                >
+                <Box flexDirection={'row'}>
+                    <Image source={require('../assets/icon/icon_izin.png')} alt="icon-izin"></Image>
+                    <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">Izin Kerja</Text>
+                </Box>
+                    
+                </ImageBackground>
+                </Pressable>
+
+                <Pressable>
+                <ImageBackground
+                    source={require('../assets/gradient_blue.jpg')}
+                    style={{ padding:20, borderRadius: 10, marginHorizontal: 15}}
+                    imageStyle={{ borderRadius: 10 }}
+                >
+                <Box flexDirection={'row'}>
+                    <Image source={require('../assets/icon/icon_daftar_kantor.png')} alt="icon-daftar"></Image>
+                    <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">Daftar Kantor</Text>
+                </Box>
+                    
+                </ImageBackground>
+                </Pressable>
+                <Pressable>
+                <ImageBackground
+                    source={require('../assets/gradient_blue.jpg')}
+                    style={{ padding:20, borderRadius: 10, marginHorizontal: 15}}
+                    imageStyle={{ borderRadius: 10 }}
+                >
+                <Box flexDirection={'row'}>
+                    <Image source={require('../assets/icon/icon_faq.png')} alt="icon-faq"></Image>
+                    <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">FAQ</Text>
+                </Box>
+                    
+                </ImageBackground>
+                </Pressable>
+                <Pressable onPress={handleLogout}>
+                <ImageBackground
+                    source={require('../assets/gradient_blue.jpg')}
+                    style={{ padding:20, borderRadius: 10, marginHorizontal: 15}}
+                    imageStyle={{ borderRadius: 10 }}
+                >
+                    <Box flexDirection={'row'}>
+                    <Image source={require('../assets/icon/icon_keluar.png')} alt="icon-keluar"></Image>
+                    <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">Keluar</Text>
+                </Box>
+                    
+                </ImageBackground>
+                </Pressable>
+                
+                
+            </VStack>
+            <Modal isOpen={isLogoutModalVisible} onClose={closeLogoutModal}>
+          <Modal.Content>
+            <Modal.CloseButton />
+            <Modal.Header>Logout Confirmation</Modal.Header>
+            <Modal.Body>
+              <Text>Are you sure you want to logout?</Text>
+            </Modal.Body>
+            <Modal.Footer>
+              <HStack space={2} alignItems="center">
+                <Button onPress={closeLogoutModal}>Cancel</Button>
+                <Button colorScheme="danger" onPress={confirmLogout}>
+                  Logout
+                </Button>
+              </HStack>
+            </Modal.Footer>
+          </Modal.Content>
+        </Modal>
+        </ScrollView>
+        </ScrollView>
+    );
+};
+
+export default Profile;
