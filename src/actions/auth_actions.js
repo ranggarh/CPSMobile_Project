@@ -2,6 +2,23 @@ import { Alert } from "react-native";
 import FIREBASE from "../config/FIREBASE";
 import { clearStorage, getData, storeData } from "../utils/localStorage";
 
+export const updateUserProfile = async (uid, newData) => {
+  try {
+    await FIREBASE.database()
+      .ref("users/" + uid)
+      .update(newData);
+
+    // Update local storage jika diperlukan
+    const userData = await getData("user");
+    const updatedUserData = { ...userData, ...newData };
+    await storeData("user", updatedUserData);
+
+    return newData;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const registerUser = async (data, password) => {
   try {
     const success = await FIREBASE.auth().createUserWithEmailAndPassword(data.email, password);

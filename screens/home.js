@@ -3,11 +3,29 @@ import { Ionicons } from '@expo/vector-icons';
 import { ImageBackground, StatusBar } from "react-native";
 import React, {useState, useEffect} from "react";
 import { useNavigation } from "@react-navigation/native";
+import { getData } from "../src/utils/localStorage";
 
 
 const Home = () =>{
     const [currentTime, setCurrentTime] = useState(new Date());
     const navigation = useNavigation();
+
+    const [profile, setProfile] = useState(null);
+
+    const fetchData = async () => {
+        getData('user')
+          .then(res => {
+            console.log('User Data:', res);
+            setProfile(res);
+          })
+          .catch(error => {
+            console.error('Error fetching user data:', error);
+          });
+      };
+      
+      useEffect(() => {
+        fetchData();
+      }, []);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -67,7 +85,7 @@ const Home = () =>{
             </Box>
             <Box flexDirection={'column'} alignSelf={'center'}>
                 <Text fontSize={12}>Selamat Datang</Text>
-                <Text fontWeight={'bold'} mb={2} numberOfLines={1} ellipsizeMode="tail" style={{ maxWidth: '75%' }}>Rangga Raditya Hariyanto</Text>
+                <Text fontWeight={'bold'} mb={2} numberOfLines={1} ellipsizeMode="tail" style={{ maxWidth: '75%' }}>{profile && profile.nama ? profile.nama : "No Name"}</Text>
                 <Box  p={2} backgroundColor={'white'} width={'75'} borderRadius={5}>
                     <Text alignSelf={'center'} fontWeight={'bold'}>Staff IT</Text>
                 </Box>

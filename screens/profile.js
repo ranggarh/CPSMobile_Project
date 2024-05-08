@@ -3,10 +3,29 @@ import { ImageBackground, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { logoutUser } from "../src/actions/auth_actions";
 import { useState,useEffect } from "react";
+import { getData } from "../src/utils/localStorage";
 
 const Profile = () =>{
     const navigation = useNavigation();
     const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
+    const [profile, setProfile] = useState(null);
+    const [status, setStatus] = useState(null);
+
+    const fetchData = async () => {
+        getData('user')
+          .then(res => {
+            console.log('User Data:', res);
+            setProfile(res);
+            setStatus(res.status);
+          })
+          .catch(error => {
+            console.error('Error fetching user data:', error);
+          });
+      };
+      
+      useEffect(() => {
+        fetchData();
+      }, []);
 
     const handleLogout = () => {
         setIsLogoutModalVisible(true);
@@ -32,14 +51,14 @@ const Profile = () =>{
                 <Heading fontSize={18} >Profile Saya</Heading>
             </Box>
         <Box m={4} mt={1} flexDirection={"row"} backgroundColor={'#D8CCFE'} borderRadius={10} >
-            <Box flex={1} height={150}  borderRadius={10}>
+            <Box flex={1} height={150}  borderRadius={10} >
                 <Avatar mt={'3.5'} alignSelf={'center'} size="120" bg="blue.500" source={require("../assets/profile.png")}/>
             </Box>
-            <Box flexDirection={'column'} alignSelf={'center'}>
+            <Box flex={1} flexDirection={'column'} alignSelf={'center'}>
                 <Text fontSize={12}>Centralindo Staff</Text>
-                <Text fontWeight={'bold'} mb={2} numberOfLines={1} ellipsizeMode="tail" style={{ maxWidth: '75%' }}>Rangga Raditya Hariyanto</Text>
+                <Text fontWeight={'bold'} mb={2} numberOfLines={1} ellipsizeMode="tail" style={{ maxWidth: '75%' }}>{profile && profile.nama ? profile.nama : "No Name"}</Text>
                 <Box  p={2} backgroundColor={'white'} width={'75'} borderRadius={5}>
-                    <Text alignSelf={'center'} fontWeight={'bold'}>Staff IT</Text>
+                    <Text alignSelf={'center'} fontWeight={'bold'}>{status ? status : "-" }</Text>
                 </Box>
             </Box>
         </Box>
