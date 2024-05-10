@@ -1,4 +1,4 @@
-import { Box, Avatar, ScrollView, Heading, Input, Button, Text, Pressable, Image } from "native-base";
+import { Box, Avatar, ScrollView, Heading, Input, Button, Text, Pressable, Image, Spinner} from "native-base";
 import * as ImagePicker from 'expo-image-picker';
 import { useState, useEffect } from "react";
 import { getData } from "../src/utils/localStorage";
@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const EditProfil = () => {
     const navigation = useNavigation();
+    const [isLoading, setIsLoading] = useState(false);
     // State untuk data profil
     const [profile, setProfile] = useState(null);
     const [email, setEmail] = useState(null);
@@ -95,6 +96,7 @@ const EditProfil = () => {
     const onUpdate = async () => {
         try {
             if (validateFields()) {
+                setIsLoading(true);
                 const userData = {
                     alamat: alamat,
                     nohp: nohp,
@@ -111,6 +113,8 @@ const EditProfil = () => {
         } catch (error) {
             console.error("Error updating profile:", error.message);
             alert('Gagal memperbarui profil. Silakan coba lagi.');
+        } finally {
+            setIsLoading(false); // Set isLoading to false after registration attempt
         }
     };
 
@@ -127,9 +131,9 @@ const EditProfil = () => {
                     <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Username</Heading>
                     <Input value={email} placeholder="Masukkan Email" isDisabled={email ? true : false} placeholderTextColor={'#636EFC'} />
                     <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Alamat</Heading>
-                    <Input value={alamat} placeholder="Masukkan Alamat" isDisabled={alamat ? true : false} onChangeText={(text) => setAlamat(text)}  placeholderTextColor={'#636EFC'} />
+                    <Input value={alamat} placeholder="Masukkan Alamat"  onChangeText={(text) => setAlamat(text)}  placeholderTextColor={'#636EFC'} />
                     <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Nomor Handphone</Heading>
-                    <Input value={nohp} isDisabled={nohp ? true : false} onChangeText={(text) => setNohp(text)} placeholder="Masukkan Nomor Handphone" placeholderTextColor={'#636EFC'} />
+                    <Input value={nohp}  onChangeText={(text) => setNohp(text)} placeholder="Masukkan Nomor Handphone" placeholderTextColor={'#636EFC'} />
                     <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Status</Heading>
                     <Input value={status} isDisabled={status ? true : false} onChangeText={(text) => setStatus(text)} placeholder="Status Kerja" placeholderTextColor={'#636EFC'} />
                     {/* <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Upload Foto</Heading> */}
@@ -144,19 +148,16 @@ const EditProfil = () => {
                             resizeMode="cover"
                         />
                     )} */}
-                    <Pressable onPress={onUpdate} disabled={profile && profile.nama && email && alamat && nohp && status}>
+                    <Pressable onPress={onUpdate} >
                         <Box
                             mt={3}
                             backgroundColor={'#0066FF'}
                             borderRadius={5}
                             alignItems={'center'}
-                            opacity={(profile && profile.nama && email && alamat && nohp && status) ? 0.5 : 1} // Jika semua kolom sudah diisi, opasitasnya akan 0.5
-                            _disabled={{
-                            opacity: 0.5, // Opasitas saat tombol dinonaktifkan
-                            }}
+                            
                         >
                             <Text p={3} color={'white'} fontWeight={'extrabold'} fontSize={'md'} textAlign={'center'}>
-                            Simpan
+                                {isLoading ? <Spinner size="sm" color="white" /> : "Simpan"}
                             </Text>
                         </Box>
                     </Pressable>

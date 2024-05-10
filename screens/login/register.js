@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Input, Pressable } from "native-base";
+import { Box, Heading, Text, Input, Pressable, Spinner } from "native-base";
 import { ImageBackground } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -10,6 +10,7 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [status, setStatus] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     // State for error messages
     const [namaError, setNamaError] = useState("");
@@ -61,6 +62,8 @@ const Register = () => {
         try {
             // Validate fields
             if (validateFields()) {
+                setIsLoading(true); // Set isLoading to true to show spinner
+
                 // Prepare user data for registration
                 const userData = {
                     nama: nama,
@@ -78,6 +81,8 @@ const Register = () => {
             // Catch and handle errors that may occur during registration
             console.error("Error during registration:", error.message);
             setRegisterError(error.message);
+        } finally {
+            setIsLoading(false); // Set isLoading to false after registration attempt
         }
     };
 
@@ -144,7 +149,7 @@ const Register = () => {
                     <Pressable onPress={onRegister}>
                         <Box mx={8} mt={5} backgroundColor={'#0066FF'} borderRadius={5} alignItems={'center'}>
                             <Text p={3} color={'white'} fontWeight={'extrabold'} fontSize={'md'} textAlign={'center'}>
-                                Simpan
+                                {isLoading ? <Spinner size="sm" color="white" /> : "Simpan"}
                             </Text>
                         </Box>
                     </Pressable>
@@ -163,3 +168,4 @@ const Register = () => {
 };
 
 export default Register;
+

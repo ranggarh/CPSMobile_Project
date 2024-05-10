@@ -2,7 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { NativeBaseProvider} from "native-base";
+import { NativeBaseProvider, Spinner} from "native-base";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Home from "./screens/home";
 import Absen from "./screens/absen";
@@ -70,6 +70,7 @@ const App = () => {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
+      {/* <Spinner visibility="visible" /> */}
         <Stack.Navigator>    
           <Stack.Screen name="Login" component={Login} options={noHead} />
           <Stack.Screen name="Register" component={Register} options={noHead}/>
