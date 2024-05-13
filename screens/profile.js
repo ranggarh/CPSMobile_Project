@@ -50,13 +50,13 @@ const Profile = () =>{
         <Box padding={5}>
                 <Heading fontSize={18} >Profile Saya</Heading>
             </Box>
-        <Box m={4} mt={1} flexDirection={"row"} backgroundColor={'#D8CCFE'} borderRadius={10} >
+        <Box m={4} mt={1} flexDirection={"row"} backgroundColor={'#181059'} borderRadius={10} >
             <Box flex={1} height={150}  borderRadius={10} >
                 <Avatar mt={'3.5'} alignSelf={'center'} size="120" bg="blue.500" source={require("../assets/profile.png")}/>
             </Box>
             <Box flex={1} flexDirection={'column'} alignSelf={'center'}>
-                <Text fontSize={12}>Centralindo Staff</Text>
-                <Text fontWeight={'bold'} mb={2} numberOfLines={1} ellipsizeMode="tail" style={{ maxWidth: '75%' }}>{profile && profile.nama ? profile.nama : "No Name"}</Text>
+                <Text color={'white'} fontSize={12}>Centralindo Staff</Text>
+                <Text color={'white'} fontWeight={'bold'} mb={2} numberOfLines={1} ellipsizeMode="tail" style={{ maxWidth: '75%' }}>{profile && profile.nama ? profile.nama : "No Name"}</Text>
                 <Box  p={2} backgroundColor={'white'} width={'75'} borderRadius={5}>
                     <Text alignSelf={'center'} fontWeight={'bold'}>{status ? status : "-" }</Text>
                 </Box>
@@ -66,71 +66,40 @@ const Profile = () =>{
         <ScrollView backgroundColor={'white'}>
             <VStack space={2} >
                 <Pressable onPress={() =>{navigation.navigate('Edit Profil')} }>
-                <ImageBackground
-                    source={require('../assets/gradient_blue.jpg')}
-                    style={{ padding:20, borderRadius: 10, marginHorizontal: 15}}
-                    imageStyle={{ borderRadius: 10 }}
-                    
-                >
-                <Box flexDirection={'row'}>
-                    <Image source={require('../assets/icon/icon_profil.png')} alt="icon-profil"></Image>
-                    <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">Edit Profil</Text>
-                </Box>
-                </ImageBackground>
+                  <Box flexDirection={'row'} backgroundColor={'#181059'} mx={4} p={4} borderRadius={5}>
+                      <Image source={require('../assets/icon/icon_profil.png')} alt="icon-profil"></Image>
+                      <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">Edit Profil</Text>
+                  </Box>
+                </Pressable>
+                <Pressable>
+                  <Box flexDirection={'row'} backgroundColor={'#181059'} mx={4} p={4} borderRadius={5}>
+                      <Image source={require('../assets/icon/icon_izin.png')} alt="icon-izin"></Image>
+                      <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">Izin Kerja</Text>
+                  </Box>
                 </Pressable>
 
                 <Pressable>
-                <ImageBackground
-                    source={require('../assets/gradient_blue.jpg')}
-                    style={{ padding:20, borderRadius: 10, marginHorizontal: 15}}
-                    imageStyle={{ borderRadius: 10 }}
-                >
-                <Box flexDirection={'row'}>
-                    <Image source={require('../assets/icon/icon_izin.png')} alt="icon-izin"></Image>
-                    <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">Izin Kerja</Text>
-                </Box>
-                    
-                </ImageBackground>
+                  <Box flexDirection={'row'} backgroundColor={'#181059'} mx={4} p={4} borderRadius={5}>
+                      <Image source={require('../assets/icon/icon_daftar_kantor.png')} alt="icon-daftar"></Image>
+                      <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">Daftar Kantor</Text>
+                  </Box>
                 </Pressable>
 
                 <Pressable>
-                <ImageBackground
-                    source={require('../assets/gradient_blue.jpg')}
-                    style={{ padding:20, borderRadius: 10, marginHorizontal: 15}}
-                    imageStyle={{ borderRadius: 10 }}
-                >
-                <Box flexDirection={'row'}>
-                    <Image source={require('../assets/icon/icon_daftar_kantor.png')} alt="icon-daftar"></Image>
-                    <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">Daftar Kantor</Text>
-                </Box>
-                    
-                </ImageBackground>
+                  <Box flexDirection={'row'} backgroundColor={'#181059'} mx={4} p={4} borderRadius={5}>
+                      <Image source={require('../assets/icon/icon_faq.png')} alt="icon-faq"></Image>
+                      <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">FAQ</Text>
+                  </Box>
                 </Pressable>
-                <Pressable>
-                <ImageBackground
-                    source={require('../assets/gradient_blue.jpg')}
-                    style={{ padding:20, borderRadius: 10, marginHorizontal: 15}}
-                    imageStyle={{ borderRadius: 10 }}
-                >
-                <Box flexDirection={'row'}>
-                    <Image source={require('../assets/icon/icon_faq.png')} alt="icon-faq"></Image>
-                    <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">FAQ</Text>
-                </Box>
-                    
-                </ImageBackground>
-                </Pressable>
+
                 <Pressable onPress={handleLogout}>
-                <ImageBackground
-                    source={require('../assets/gradient_blue.jpg')}
-                    style={{ padding:20, borderRadius: 10, marginHorizontal: 15}}
-                    imageStyle={{ borderRadius: 10 }}
-                >
-                    <Box flexDirection={'row'}>
+                
+                    <Box flexDirection={'row'} backgroundColor={'#181059'} mx={4} p={4} borderRadius={5}>
                     <Image source={require('../assets/icon/icon_keluar.png')} alt="icon-keluar"></Image>
                     <Text ml={4} mt={1} textAlign={'center'} fontSize={16} fontWeight="bold" color="white">Keluar</Text>
                 </Box>
                     
-                </ImageBackground>
+                
                 </Pressable>
                 
                 

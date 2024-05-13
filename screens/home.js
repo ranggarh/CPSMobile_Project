@@ -100,14 +100,14 @@ const Home = () =>{
             </Box>
 
             {/* Section 2 Selamat Datang */} 
-            <Box m={4} mt={-2} flexDirection={"row"} backgroundColor={'#D8CCFE'} borderRadius={10} >
+            <Box m={4} mt={-2} flexDirection={"row"} backgroundColor={'#181059'} borderRadius={10} >
                 <Box height={150} backgroundColor={'blue.100'} borderRadius={10}>
-                    <Image source={require('../assets/selamat_datang_assets.png')}
+                    <Image source={require('../assets/selamat_datang_assets.jpg')}
                     style={{ width: 200,height:150, borderRadius:10 }} alt="Selamat Datang ICON"></Image>
                 </Box>
                 <Box flexDirection={'column'} alignSelf={'center'}>
-                    <Text fontSize={12}>Selamat Datang</Text>
-                    <Text fontWeight={'bold'} mb={2} numberOfLines={1} ellipsizeMode="tail" style={{ maxWidth: '75%' }}>{profile && profile.nama ? profile.nama : "No Name"}</Text>
+                    <Text color={'white'} fontSize={12}>Selamat Datang</Text>
+                    <Text color={'white'} fontWeight={'bold'} mb={2} numberOfLines={1} ellipsizeMode="tail" style={{ maxWidth: '75%' }}>{profile && profile.nama ? profile.nama : "No Name"}</Text>
                     <Box  p={2} backgroundColor={'white'} width={'75'} borderRadius={5}>
                         <Text alignSelf={'center'} fontWeight={'bold'}>Staff IT</Text>
                     </Box>
@@ -116,36 +116,14 @@ const Home = () =>{
 
             {/* Section 3 Dashboard */}
             <Heading m={5} mt={1} fontSize={16}>Dashboard</Heading>
-            <Box m={4} mt={-2} flexDirection={"row"} borderRadius={10}>
-                <Box width={150} height={120} style={{marginRight: 10, borderRadius: 10, overflow: 'hidden',shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8, elevation: 5 }}>
-                    <ImageBackground
-                        source={require('../assets/gradient_blue.jpg')}
-                        style={{ flex: 1, borderRadius: 10 }}
-                        resizeMode="cover"
-                    >
-                        <Text left={5} top={4} fontWeight={'bold'} color={'white'} >Presentase</Text>
-                            <Box
-                                flex={1}
-                                justifyContent="center"
-                                alignItems="center"
-                            >
-                                
-                                <Text fontWeight="bold" color="white" fontSize={34}>100%</Text>
-                            </Box>
-                    </ImageBackground>
-                </Box>
-                
-                <Box width={190} height={120} style={{marginRight: 10, borderRadius: 10, overflow: 'hidden',shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8, elevation: 5  }}>
-                    <ImageBackground
-                        source={require('../assets/gradient_blue.jpg')}
-                        style={{ flex: 1, borderRadius: 10 }}
-                        resizeMode="cover"
-                    >
+            <Box m={4} mt={-2} borderRadius={10}>
+
+                <Box width={'full'} height={130} backgroundColor={'#181059'} style={{marginRight: 10, borderRadius: 10, overflow: 'hidden',shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8, elevation: 5  }}>
                         <Text left={5} top={4} fontWeight={'bold'} color={'white'} >Kehadiran</Text>
                             <Box
                                 flex={1}
-                                justifyContent="center"
-                                alignItems="center"
+                                py={5}
+                                mx={4}
                                 flexDirection={'row'}
                                 
                             >
@@ -153,13 +131,20 @@ const Home = () =>{
                                     <Text fontSize={10} fontWeight={'bold'} mt={-1}>Masuk</Text>
                                     <Text fontWeight={'bold'} textAlign={'center'}  fontSize={25}>{absensiData[profile?.uid] ? absensiData[profile?.uid].masuk : 0}</Text>
                                 </Box>
-                                <Box mt={2} ml={1} p={2} width={75} height={65} backgroundColor={'white'} borderRadius={5}>
+                                <Box mt={2} ml={1} mr={1} p={2} width={75} height={65} backgroundColor={'white'} borderRadius={5}>
                                     <Text fontSize={10} fontWeight={'bold'} mt={-1}>Alpha</Text>
                                     <Text fontWeight={'bold'} textAlign={'center'} fontSize={25}>{absensiData[profile?.uid] ? absensiData[profile?.uid].alpa : 0}</Text>
                                 </Box>
+                                <Box mt={2} ml={1} mr={1} p={2} width={75} height={65} backgroundColor={'white'} borderRadius={5}>
+                                    <Text fontSize={10} fontWeight={'bold'} mt={-1}>Izin Kerja</Text>
+                                    <Text fontWeight={'bold'} textAlign={'center'} fontSize={25}>{absensiData[profile?.uid] ? absensiData[profile?.uid].alpa : 0}</Text>
+                                </Box>
+                                <Box mt={2} ml={1} mr={1} p={2} width={75} height={65}  borderRadius={5}>
+                                    <Image source={require('../assets/icon/icon_riwayat.png')} alt="riwayat"></Image>
+                                </Box>
                                 
                             </Box>
-                    </ImageBackground>
+                    
                 </Box>
             </Box>
 
@@ -167,69 +152,48 @@ const Home = () =>{
             <Heading m={5} mt={1} fontSize={16}>Menu Utama</Heading>
             <Pressable onPress={() => navigation.navigate('Absen')}>
                 <Box m={4} mt={-2} flexDirection={"row"} borderRadius={10}>
-                    <Box width={'49%'} height={75} style={{ borderRadius: 10, overflow: 'hidden',shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8, elevation: 5 }}>
-                        <ImageBackground
-                                source={require('../assets/Absen.png')}
-                                style={{ flex: 1, borderRadius: 10 }}
-                                resizeMode="cover"
-                                blurRadius={7}
-                        >
-                            <Box
+                    <Box backgroundColor={'#181059'} width={'49%'} height={75} style={{ borderRadius: 10, overflow: 'hidden',shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8, elevation: 5 }}>
+                        <Box
                                 flex={1}
                                 justifyContent="center"
                                 alignItems="center"
                                 
                             >
                                 <Text fontWeight={'extrabold'} color={'white'} fontSize={24}>Presensi</Text>
-                            </Box>
-
-                        </ImageBackground>
+                        </Box>    
                     </Box>
                     <Box width={'2%'} backgroundColor={'white'} />
-                    <Box width={'49%'} height={75} style={{ borderRadius: 10, overflow: 'hidden',shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8, elevation: 5  }} borderColor={'grey'}>
-                        <ImageBackground
-                                source={require('../assets/riwayat.png')}
-                                style={{ flex: 1, borderRadius: 10 }}
-                                resizeMode="cover"
-                                blurRadius={7}
-                        >
-                            <Box
+                    <Box backgroundColor={'#181059'} width={'49%'} height={75} style={{ borderRadius: 10, overflow: 'hidden',shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8, elevation: 5  }} borderColor={'grey'}>
+                        <Box
                                 flex={1}
                                 justifyContent="center"
                                 alignItems="center"
                             >
                                 <Text fontWeight={'extrabold'} color={'white'} fontSize={24}>Riwayat</Text>
-                            </Box>
-                        </ImageBackground>
+                        </Box>
+                        
                     </Box>
                 </Box>
             </Pressable>
 
             {/* Section 5 Top Presensi Tercepat */}
             <Heading m={5} mt={1} fontSize={16}>Top Presensi Tercepat</Heading>
-            <Box m={3} mt={-2} borderRadius={10} p={3}>
-                <ImageBackground
-                                source={require('../assets/gradient_tercepat.png')}
-                                style={{ flex: 1, borderRadius: 10 }}
-                                resizeMode="cover"
-                                blurRadius={7}
-                                borderRadius={5}
-                >
-                    {data.map((item) => (
+            <Box m={3} mt={-2} borderRadius={10} p={3} backgroundColor={'#EEEEEE'}>
+                {data.map((item) => (
                         <Box key={item.id} flexDirection="row" alignItems="center" justifyContent="space-between" padding={3} m={1}>
-                        <Text>{item.id + ".  "}</Text>
-                        <Box flex={2} paddingRight={10}>
-                            <Text numberOfLines={1} ellipsizeMode="tail">{item.name}</Text>
-                        </Box>
-                        <Box flex={1}>
-                            <Text>{item.time}</Text>
-                        </Box>
-                        <Box flex={1}>
-                            <Text color={item.category === "Masuk" ? "green.500" : "red.500"}>{item.category}</Text>
-                        </Box>
+                            <Text>{item.id + ".  "}</Text>
+                            <Box flex={2} paddingRight={10}>
+                                <Text numberOfLines={1} ellipsizeMode="tail">{item.name}</Text>
+                            </Box>
+                            <Box flex={1}>
+                                <Text>{item.time}</Text>
+                            </Box>
+                            <Box flex={1}>
+                                <Text color={item.category === "Masuk" ? "green.500" : "red.500"}>{item.category}</Text>
+                            </Box>
                         </Box>
                     ))}
-                </ImageBackground>
+                
             </Box>
         </ScrollView>
     );

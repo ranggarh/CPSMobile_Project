@@ -1,5 +1,4 @@
-import { Box, Heading, Text, Input, Pressable, Spinner } from "native-base";
-import { ImageBackground } from "react-native";
+import { Box, Heading, Text, Input, Pressable, Spinner, StatusBar, ScrollView } from "native-base";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { registerUser } from "../../src/actions/auth_actions";
@@ -88,66 +87,63 @@ const Register = () => {
 
     return (
         <Box flex={1}>
-            <ImageBackground
-                source={require('../../assets/gradient_3.jpg')}
-                resizeMode="cover"
-                style={{ flex: 1 }}
-            >
-                <Box py={15}>
-                    <Heading color={'#0066FF'} mt={40} fontSize={28} mx={8}>Sign Up</Heading>
-                    <Heading mx={8} mt={8} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0066FF'}>Nama Lengkap</Heading>
+        <ScrollView>
+            <StatusBar backgroundColor={'#0F0279'} barStyle="white"/>
+                <Box mt={-10}>
+                    <Heading color={'#0F0279'} mt={40} fontSize={28} mx={8}>Sign Up</Heading>
+                    <Heading mx={8} mt={8} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0F0279'}>Nama Lengkap</Heading>
                     <Input label="Nama"
                         value={nama}
                         onChangeText={(nama) => setNama(nama)}
                         mx={8}
                         placeholder="Nama Lengkap"
-                        placeholderTextColor={'#0066FF'}
-                        _light={{ borderColor: '#0066FF' }}
+                        placeholderTextColor={'#0F0279'}
+                        _light={{ borderColor: '#0F0279' }}
                     />
                     {namaError ? <Text mx={8} mt={1} color="red.500">{namaError}</Text> : null}
 
-                    <Heading mx={8} mt={3} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0066FF'}>Username</Heading>
+                    <Heading mx={8} mt={3} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0F0279'}>Username</Heading>
                     <Input label="Email"
                         value={email}
                         onChangeText={(email) => setEmail(email)}
                         mx={8}
                         placeholder="Username"
-                        placeholderTextColor={'#0066FF'}
-                        _light={{ borderColor: '#0066FF' }}
+                        placeholderTextColor={'#0F0279'}
+                        _light={{ borderColor: '#0F0279' }}
                     />
                     {emailError ? <Text mx={8} mt={1} color="red.500">{emailError}</Text> : null}
 
-                    <Heading mx={8} mt={3} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0066FF'}>Password</Heading>
+                    <Heading mx={8} mt={3} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0F0279'}>Password</Heading>
                     <Input label="Password"
                         
                         value={password}
                         onChangeText={(password) => setPassword(password)}
                         mx={8}
                         placeholder="Password"
-                        placeholderTextColor={'#0066FF'}
-                        _light={{ borderColor: '#0066FF' }}
+                        placeholderTextColor={'#0F0279'}
+                        _light={{ borderColor: '#0F0279' }}
                         secureTextEntry={!showPassword} // Hide password if showPassword is false
                         InputRightElement={
                             <Pressable onPress={() => setShowPassword(!showPassword)}>
-                                <Text color={'#0066FF'}>{showPassword ? 'Hide' : 'Show'}</Text>
+                                <Text color={'#0F0279'}>{showPassword ? 'Hide' : 'Show'}</Text>
                             </Pressable>
                         }
                     />
                     {passwordError ? <Text mx={8} mt={1} color="red.500">{passwordError}</Text> : null}
 
-                    <Heading mx={8} mt={3} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0066FF'}>Status</Heading>
+                    <Heading mx={8} mt={3} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0F0279'}>Status</Heading>
                     <Input label="Status"
                         value={status}
                         onChangeText={(status) => setStatus(status)}
                         mx={8}
                         placeholder="Status"
-                        placeholderTextColor={'#0066FF'}
-                        _light={{ borderColor: '#0066FF' }}
+                        placeholderTextColor={'#0F0279'}
+                        _light={{ borderColor: '#0F0279' }}
                     />
                     {statusError ? <Text mx={8} mt={1} color="red.500">{statusError}</Text> : null}
 
                     <Pressable onPress={onRegister}>
-                        <Box mx={8} mt={5} backgroundColor={'#0066FF'} borderRadius={5} alignItems={'center'}>
+                        <Box mx={8} mt={5} backgroundColor={'#0F0279'} borderRadius={5} alignItems={'center'}>
                             <Text p={3} color={'white'} fontWeight={'extrabold'} fontSize={'md'} textAlign={'center'}>
                                 {isLoading ? <Spinner size="sm" color="white" /> : "Simpan"}
                             </Text>
@@ -156,13 +152,13 @@ const Register = () => {
                     {registerError ? <Text mx={8} mt={1} color="red.500">{registerError}</Text> : null}
 
                     <Box flexDirection={'row'} mx={8} mt={3}  >
-                        <Text fontWeight={'medium'} fontSize={12} color={'#0066FF'}>Sudah Mempunyai Akun? </Text>
+                        <Text fontWeight={'medium'} fontSize={12} color={'#0F0279'}>Sudah Mempunyai Akun? </Text>
                         <Pressable onPress={() => navigation.navigate('Login')}>
-                            <Text  fontWeight={'medium'} fontSize={12} color={'#0066FF'} textDecorationLine={'underline'}>Login Disini</Text>
+                            <Text  fontWeight={'medium'} fontSize={12} color={'#0F0279'} textDecorationLine={'underline'}>Login Disini</Text>
                         </Pressable>
                     </Box>
                 </Box>
-            </ImageBackground>
+            </ScrollView>
         </Box>
     )
 };

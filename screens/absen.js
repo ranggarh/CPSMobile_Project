@@ -75,6 +75,7 @@ const Absen = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   // State untuk menampilkan atau menyembunyikan modal konfirmasi absen
   const [showModal, setShowModal] = useState(false);
+  
 
   useEffect(() => {
     // Mengambil posisi pengguna dan mengatur interval waktu saat ini
@@ -135,7 +136,7 @@ const Absen = () => {
           await tambahAbsensi(selectedLocation, currentTime);
           Alert.alert('Berhasil Absen Masuk', 'Anda berhasil absen masuk.');
         } else {
-          Alert.alert('Gagal Absen Masuk', 'Lokasi Anda tidak cocok dengan yang dipilih. Silakan pilih lokasi lain atau coba lagi.');
+          Alert.alert('Gagal Absen Masuk', 'Pastikan Anda Sudah Berada di Lokasi Absen.');
         }
       } catch (error) {
         console.error('Error:', error);
@@ -171,7 +172,7 @@ const Absen = () => {
         <Box p={3} mt={4}>
           {/* Tombol untuk memilih lokasi absen */}
           <Pressable onPress={() => handleLocationSelection('Kantor Utama')}>
-            <Box style={{marginRight: 10, borderRadius: 10, overflow: 'hidden',shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8, elevation: 3 }} mb={4} backgroundColor={selectedLocation === 'Kantor Utama' ? '#5968FF' : '#EEEEEE'} borderRadius={10} p={3}>
+            <Box style={{marginRight: 10, borderRadius: 10, overflow: 'hidden',shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8, elevation: 3 }} mb={4} backgroundColor={selectedLocation === 'Kantor Utama' ? '#181059' : '#EEEEEE'} borderRadius={10} p={3}>
               <Text color={selectedLocation === 'Kantor Utama' ? 'white' : '#000'} fontWeight={'bold'}>
                 Kantor Utama
               </Text>
@@ -183,7 +184,7 @@ const Absen = () => {
 
           {/* Tombol untuk memilih lokasi absen */}
           <Pressable onPress={() => handleLocationSelection('Kantor Cabang')}>
-            <Box style={{marginRight: 10, borderRadius: 10, overflow: 'hidden',shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8, elevation: 3 }} backgroundColor={selectedLocation === 'Kantor Cabang' ? '#5968FF' : '#EEEEEE'} borderRadius={10} p={3}>
+            <Box style={{marginRight: 10, borderRadius: 10, overflow: 'hidden',shadowColor: '#000', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8, elevation: 3 }} backgroundColor={selectedLocation === 'Kantor Cabang' ? '#181059' : '#EEEEEE'} borderRadius={10} p={3}>
               <Text color={selectedLocation === 'Kantor Cabang' ? 'white' : '#000'} fontWeight={'bold'}>
                 Primavera Swimming Pool
               </Text>
@@ -199,7 +200,7 @@ const Absen = () => {
         {/* Tombol untuk absen masuk */}
         <Box flex={1} mr={2}>
           <Pressable onPress={handleAbsenMasuk}>
-            <Box w="100%" h={'50'} backgroundColor={'#0066FF'} borderRadius={15} alignItems={'center'}>
+            <Box w="100%" h={'50'} backgroundColor={'#181059'} borderRadius={15} alignItems={'center'}>
               <Text p={3} color={'white'} fontWeight={'extrabold'} fontSize={'md'} textAlign={'center'}>
                 Masuk
               </Text>

@@ -48,7 +48,7 @@ const Tabs = () => {
         },
         tabBarIconStyle: { marginTop: 5 },
         tabBarStyle: {
-          backgroundColor: '#6C6DFB',
+          backgroundColor: '#181059',
           height: 70,
           borderTopWidth: 0,
           borderTopRightRadius: 10,

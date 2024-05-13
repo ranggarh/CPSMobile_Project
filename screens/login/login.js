@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { loginUser } from "../../src/actions/auth_actions";
-import { Box, Heading, Text, Input, Pressable, ScrollView, Spinner } from "native-base";
+import { Box, Heading, Text, Input, Pressable, ScrollView, Spinner, StatusBar } from "native-base";
 import { ImageBackground } from "react-native";
+
 
 const Login = () => {
     const navigation = useNavigation();
@@ -49,14 +50,10 @@ const Login = () => {
 
     return (
         <>
-            <ImageBackground
-                source={require('../../assets/gradient_3.jpg')}
-                resizeMode="cover"
-                style={{ flex: 1 }}
-            >
-                <ScrollView flex={1}>
+                <ScrollView flex={1} backgroundColor={'white'} >
+                <StatusBar backgroundColor={'#0F0279'} barStyle="white"/>
                     <Box py={15}>
-                        <Heading color={'#0066FF'} fontSize={28} mt={40} mx={8}>Sign In</Heading>
+                        <Heading color={'#0F0279'} fontSize={28} mt={40} mx={8}>Sign In</Heading>
 
                         {loginError ? ( // Menampilkan pesan kesalahan login tidak valid jika ada
                             <Text mx={8} mt={2} color="red.500" fontSize={14}>
@@ -64,33 +61,33 @@ const Login = () => {
                             </Text>
                         ) : null}
 
-                        <Heading mx={8} mt={4} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0066FF'}>Email</Heading>
+                        <Heading mx={8} mt={4} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0F0279'}>Email</Heading>
                         <Input
                             label="Email"
                             value={email}
                             onChangeText={(text) => setEmail(text)}
                             mx={8}
                             placeholder="Email"
-                            placeholderTextColor={'#0066FF'}
-                            _light={{ borderColor: '#0066FF' }}
+                            placeholderTextColor={'#0F0279'}
+                            _light={{ borderColor: '#0F0279' }}
                         />
                             <Text mx={8} mt={1} color="red.500" fontSize={12}>
                                 {emailError}
                             </Text>
 
-                        <Heading mx={8} mt={1} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0066FF'}>Password</Heading>
+                        <Heading mx={8} mt={1} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0F0279'}>Password</Heading>
                         <Input
                             label="Password"
                             value={password}
                             onChangeText={(text) => setPassword(text)}
                             mx={8}
                             placeholder="Password"
-                            placeholderTextColor={'#0066FF'}
-                            _light={{ borderColor: '#0066FF' }}
+                            placeholderTextColor={'#0F0279'}
+                            _light={{ borderColor: '#0F0279' }}
                             secureTextEntry={!showPassword} // Hide password if showPassword is false
                             InputRightElement={
                                 <Pressable onPress={() => setShowPassword(!showPassword)}>
-                                    <Text color={'#0066FF'}>{showPassword ? 'Hide' : 'Show'}</Text>
+                                    <Text color={'#0F0279'}>{showPassword ? 'Hide' : 'Show'}</Text>
                                 </Pressable>
                             }
                         />
@@ -102,11 +99,11 @@ const Login = () => {
 
                         {loading ? ( // Tampilkan spinner jika loading
                             <Box mx={8} mt={4} alignItems={'center'}>
-                                <Spinner color="blue.500" />
+                                <Spinner color="#0F0279" />
                             </Box>
                         ) : (
                             <Pressable onPress={handleLogin}>
-                                <Box mx={8} mt={4} backgroundColor={'#0066FF'} borderRadius={5} alignItems={'center'}>
+                                <Box mx={8} mt={4} backgroundColor={'#0F0279'} borderRadius={5} alignItems={'center'}>
                                     <Text p={3} color={'white'} fontWeight={'extrabold'} fontSize={'md'} textAlign={'center'}>
                                         Sign In
                                     </Text>
@@ -115,17 +112,16 @@ const Login = () => {
                         )}
 
                         <Box flexDirection={'row'} mx={8} mt={4}  >
-                            <Text fontWeight={'medium'} fontSize={12} color={'#0066FF'}>Don't have an account? </Text>
+                            <Text fontWeight={'medium'} fontSize={12} color={'#0F0279'}>Don't have an account? </Text>
                         
                                 <Pressable onPress={() => navigation.navigate('Register')}>
-                                    <Text fontWeight={'medium'} fontSize={12} color={'#0066FF'} textDecorationLine={'underline'}>
+                                    <Text fontWeight={'medium'} fontSize={12} color={'#0F0279'} textDecorationLine={'underline'}>
                                         Sign Up Here
                                     </Text>
                                 </Pressable>
                         </Box>
                     </Box>
                 </ScrollView>
-            </ImageBackground>
         
         </>
     )
