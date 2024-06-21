@@ -2,6 +2,7 @@ import { Box, Heading, Text, Input, Pressable, Spinner, StatusBar, ScrollView } 
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { registerUser } from "../../src/actions/auth_actions";
+import { Ionicons } from "@expo/vector-icons";
 
 const Register = () => {
     const navigation = useNavigation();
@@ -115,7 +116,6 @@ const Register = () => {
 
                     <Heading mx={8} mt={3} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0F0279'}>Password</Heading>
                     <Input label="Password"
-                        
                         value={password}
                         onChangeText={(password) => setPassword(password)}
                         mx={8}
@@ -125,7 +125,7 @@ const Register = () => {
                         secureTextEntry={!showPassword} // Hide password if showPassword is false
                         InputRightElement={
                             <Pressable onPress={() => setShowPassword(!showPassword)}>
-                                <Text color={'#0F0279'}>{showPassword ? 'Hide' : 'Show'}</Text>
+                                <Text mr={4} color={'#0F0279'}>{showPassword ? <Ionicons size={20} name="eye-off"></Ionicons> : <Ionicons size={20} name="eye"></Ionicons>}</Text>
                             </Pressable>
                         }
                     />

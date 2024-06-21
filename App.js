@@ -11,6 +11,7 @@ import Profile from "./screens/profile";
 import EditProfil from "./screens/editProfile";
 import Login from "./screens/login/login";
 import Register from "./screens/login/register";
+import IzinKerja from "./screens/izin";
 
 // Navigator Declaration
 const Stack = createNativeStackNavigator();
@@ -77,6 +78,7 @@ const App = () => {
           <Stack.Screen name="Tabs" component={Tabs} options={noHead}/>
           <Stack.Screen name="Absen" component={Absen} />
           <Stack.Screen name="Edit Profil" component={EditProfil} />
+          <Stack.Screen name="Izin Kerja" component={IzinKerja} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

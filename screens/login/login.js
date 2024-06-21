@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { loginUser } from "../../src/actions/auth_actions";
 import { Box, Heading, Text, Input, Pressable, ScrollView, Spinner, StatusBar } from "native-base";
-import { ImageBackground } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 
 const Login = () => {
@@ -87,7 +87,7 @@ const Login = () => {
                             secureTextEntry={!showPassword} // Hide password if showPassword is false
                             InputRightElement={
                                 <Pressable onPress={() => setShowPassword(!showPassword)}>
-                                    <Text color={'#0F0279'}>{showPassword ? 'Hide' : 'Show'}</Text>
+                                    <Text mr={3} color={'#0F0279'}>{showPassword ? <Ionicons size={20} name="eye-off"></Ionicons> : <Ionicons size={20} name="eye"></Ionicons>}</Text>
                                 </Pressable>
                             }
                         />
