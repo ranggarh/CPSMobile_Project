@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Input, Pressable, Spinner, StatusBar, ScrollView } from "native-base";
+import { Box, Heading, Text, Input, Pressable, Spinner, StatusBar, ScrollView, Alert } from "native-base";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { registerUser } from "../../src/actions/auth_actions";
@@ -40,11 +40,21 @@ const Register = () => {
         if (!email.trim()) {
             setEmailError("Email harus diisi");
             isValid = false;
+        } else {
+            // Email format validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                setEmailError("Format email tidak valid");
+                isValid = false;
+            }
         }
 
         // Validate password
         if (!password.trim()) {
             setPasswordError("Password harus diisi");
+            isValid = false;
+        } else if (password.length < 8) {
+            setPasswordError("Password minimal 8 karakter");
             isValid = false;
         }
 
@@ -106,7 +116,7 @@ const Register = () => {
                     <Heading mx={8} mt={3} fontSize={14} fontWeight={'extrabold'} mb={2} color={'#0F0279'}>Username</Heading>
                     <Input label="Email"
                         value={email}
-                        onChangeText={(email) => setEmail(email)}
+                        onChangeText={(email) => setEmail(email.toLowerCase())} 
                         mx={8}
                         placeholder="Username"
                         placeholderTextColor={'#0F0279'}
@@ -164,4 +174,3 @@ const Register = () => {
 };
 
 export default Register;
-

@@ -28,6 +28,7 @@ const Riwayat = () => {
     const isSelected = index === selectedIndex; // Menentukan apakah item saat ini dipilih
     let waktuMasuk = item.waktuMasuk ? item.waktuMasuk.split(' ')[1] : '-';
     let waktuPulang = item.waktuPulang ? item.waktuPulang.split(' ')[1] : '-';
+    let waktuIzin = item.waktuIzin ? item.waktuIzin.split(' ')[1] : '-';
 
     const toggleDetails = () => {
       setSelectedIndex(isSelected ? -1 : index); // Mengatur selectedIndex sesuai dengan kondisi
@@ -35,6 +36,7 @@ const Riwayat = () => {
 
     return (
       <Pressable onPress={toggleDetails}>
+        <Text color={"#181059"} fontWeight={'bold'} m={2}>{item.hari}, {item.waktuMasuk || item.waktuIzin}</Text>
         <Box
           bg={isSelected ? "#181059" : "white"} // Menggunakan kondisi untuk menentukan warna background
           mb={2}
@@ -42,7 +44,7 @@ const Riwayat = () => {
         >
           <Box backgroundColor={'white'} p={4} flexDirection={'row'} justifyContent={'space-between'}>
             <Text fontWeight={'regular'} numberOfLines={1} ellipsizeMode="tail" style={{ maxWidth: '50%' }}>{item.nama}</Text>
-            <Text fontWeight={'regular'}>{waktuMasuk}</Text>
+            <Text fontWeight={'regular'}>{item.jenis === 'Izin' ? waktuIzin : waktuMasuk}</Text>
             <Text fontWeight={'regular'}>-</Text>
             <Text fontWeight={'regular'}>{waktuPulang}</Text>
             <Text fontWeight={'regular'} color={item.status === "Masuk" ? "green.500" : item.status === "Izin" ? "yellow.500" : "red.500"}>{item.status}</Text>
@@ -61,20 +63,33 @@ const Riwayat = () => {
                 <Text fontWeight={'medium'} color={'white'}>Hari:</Text>
                 <Text fontWeight={'medium'} color={'white'}>{item.hari || "-"}</Text>
               </Box>
-              <Box justifyContent={'space-between'} flexDirection={'row'}>
-                <Text fontWeight={'medium'} color={'white'}>Waktu Masuk:</Text>
-                <Text fontWeight={'medium'} color={'white'}>{item.waktuMasuk || "-"}</Text>
-              </Box>
-              <Box justifyContent={'space-between'} flexDirection={'row'}>
-                <Text fontWeight={'medium'} color={'white'}>Waktu Pulang:</Text>
-                <Text fontWeight={'medium'} color={'white'}>{item.waktuPulang || "-"}</Text>
-              </Box>
-              {item.jenis === 'Izin' &&
-                <Box justifyContent={'space-between'} flexDirection={'row'}>
-                  <Text fontWeight={'medium'} color={'white'}>Alasan:</Text>
-                  <Text fontWeight={'medium'} color={'white'}>{item.alasan || "-"}</Text>
-                </Box>
-              }
+              {item.jenis === 'Izin' ? (
+                <>
+                  <Box justifyContent={'space-between'} flexDirection={'row'}>
+                    <Text fontWeight={'medium'} color={'white'}>Waktu Izin:</Text>
+                    <Text fontWeight={'medium'} color={'white'}>{item.waktuIzin || "-"}</Text>
+                  </Box>
+                  <Box justifyContent={'space-between'} flexDirection={'row'}>
+                    <Text fontWeight={'medium'} color={'white'}>Waktu Pulang:</Text>
+                    <Text fontWeight={'medium'} color={'white'}>{waktuPulang}</Text>
+                  </Box>
+                  <Box justifyContent={'space-between'} flexDirection={'row'}>
+                    <Text fontWeight={'medium'} color={'white'}>Alasan:</Text>
+                    <Text fontWeight={'medium'} color={'white'}>{item.alasan || "-"}</Text>
+                  </Box>
+                </>
+              ) : (
+                <>
+                  <Box justifyContent={'space-between'} flexDirection={'row'}>
+                    <Text fontWeight={'medium'} color={'white'}>Waktu Masuk:</Text>
+                    <Text fontWeight={'medium'} color={'white'}>{item.waktuMasuk || "-"}</Text>
+                  </Box>
+                  <Box justifyContent={'space-between'} flexDirection={'row'}>
+                    <Text fontWeight={'medium'} color={'white'}>Waktu Pulang:</Text>
+                    <Text fontWeight={'medium'} color={'white'}>{item.waktuPulang || "-"}</Text>
+                  </Box>
+                </>
+              )}
               <Box justifyContent={'space-between'} flexDirection={'row'}>
                 <Text fontWeight={'medium'} color={'white'}>Status: </Text>
                 <Text fontWeight={'medium'} color={item.status === "Masuk" ? "green.500" : item.status === "Izin" ? "yellow.500" : "red.500"}>{item.status}</Text>

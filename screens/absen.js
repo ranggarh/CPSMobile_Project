@@ -118,7 +118,7 @@ const Absen = () => {
 
         const distance = getDistance(userLocation, locationToCheck);
   
-        if (distance <= 5000) {
+        if (distance <= 50000) {
           await tambahAbsensi(selectedLocation, currentTime);
           ToastAndroid.show('Berhasil Absen Masuk', ToastAndroid.SHORT);
         } else {
@@ -206,7 +206,7 @@ const Absen = () => {
           <Box backgroundColor="white" p={4} borderRadius={10} width={300} >
             <Box borderBottomColor="#DFDFE3" borderBottomWidth={1} >
               <Text mb={2} fontWeight="medium" fontSize="14" width={'full'}>
-                Pastikan Jarak Anda dengan Lokasi sudah Berjarak 50 Meter
+                Pastikan Jarak Anda dengan Lokasi sudah Berjarak 200 Meter
               </Text>
             </Box>
             <Box mt={3} mb={5}>
@@ -215,7 +215,7 @@ const Absen = () => {
             <Box flexDirection="row" m={2}>
               {/* Yes button for confirmation */}
               <Pressable onPress={() => handleConfirmation(true)}>
-                <Box backgroundColor="#34A853" borderRadius={8} pr={6} pl={6} p={3} width="100%" h={'50'} alignItems={'center'}>
+                <Box backgroundColor="#181059" borderRadius={8} pr={6} pl={6} p={3} width="100%" h={'50'} alignItems={'center'}>
                   <Text color={'white'} fontWeight={'bold'} fontSize={'md'} textAlign={'center'}>
                     Ya
                   </Text>
@@ -224,7 +224,7 @@ const Absen = () => {
               <Box ml={2}>
                 {/* No button for confirmation */}
                 <Pressable onPress={() => handleConfirmation(false)}>
-                  <Box backgroundColor="#EEEEEE" borderColor="#9E9E9E" borderWidth={1} borderRadius={8} pr={6} pl={6} p={3} width="100%" h={'50'} alignItems={'center'}>
+                  <Box backgroundColor="#EEEEEE" borderRadius={8} pr={6} pl={6} p={3} width="100%" h={'50'} alignItems={'center'}>
                     <Text color={'#000'} fontWeight={'bold'} fontSize={'md'} textAlign={'center'}>
                       Tidak
                     </Text>

@@ -65,7 +65,7 @@ const Login = () => {
                         <Input
                             label="Email"
                             value={email}
-                            onChangeText={(text) => setEmail(text)}
+                            onChangeText={(email) => setEmail(email.toLowerCase())} 
                             mx={8}
                             placeholder="Email"
                             placeholderTextColor={'#0F0279'}

@@ -4,6 +4,18 @@ import { clearStorage, getData, storeData } from "../utils/localStorage";
 
 export const updateUserProfile = async (uid, newData) => {
   try {
+    // Cek apakah ada gambar baru yang perlu diunggah
+    if (newData.image && !newData.image.startsWith('http')) {
+      const response = await fetch(newData.image);
+      const blob = await response.blob();
+      const fotoRef = FIREBASE.storage().ref().child(`userFoto/${uid}_${Date.now()}`);
+      await fotoRef.put(blob);
+
+      // Dapatkan URL gambar yang diunggah
+      newData.image = await fotoRef.getDownloadURL();
+    }
+
+    // Perbarui data pengguna di Realtime Database
     await FIREBASE.database()
       .ref("users/" + uid)
       .update(newData);

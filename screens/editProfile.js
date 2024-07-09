@@ -19,19 +19,20 @@ const EditProfil = () => {
     const [image, setImage] = useState(null);
 
     useEffect(() => {
-        // Ambil data profil saat komponen dimuat
-        fetchData();
+        fetchData(); // Ambil data profil saat komponen dimuat
+        requestMediaLibraryPermission(); // Minta izin akses ke galeri foto saat komponen dimuat
     }, []);
 
-    useEffect(() => {
-        // Minta izin akses ke galeri foto saat komponen dimuat
-        (async () => {
+    const requestMediaLibraryPermission = async () => {
+        try {
             const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
             if (status !== 'granted') {
                 alert('Maaf, kami memerlukan izin untuk mengakses galeri foto!');
             }
-        })();
-    }, []);
+        } catch (error) {
+            console.error('Error requesting media library permission:', error);
+        }
+    };
 
     // Fungsi untuk mengambil data profil
     const fetchData = async () => {
@@ -42,10 +43,12 @@ const EditProfil = () => {
             setAlamat(userData.alamat);
             setNohp(userData.nohp);
             setStatus(userData.status);
+            setImage(userData.image);
         } catch (error) {
             console.error('Error fetching user data:', error);
         }
     };
+
 
     // Fungsi untuk memilih gambar dari galeri
     const pickImage = async () => {
@@ -56,12 +59,26 @@ const EditProfil = () => {
                 aspect: [4, 3],
                 quality: 1,
             });
-
-            if (!result.cancelled) {
-                setImage(result.uri);
+    
+            console.log('ImagePicker result:', result); // Periksa hasil yang dikembalikan
+    
+            if (result.cancelled) {
+                console.log('User cancelled image picker');
+                return; // Hentikan eksekusi jika gambar dibatalkan
             }
+    
+            if (!result.assets || result.assets.length === 0 || !result.assets[0].uri) {
+                console.log('Image URI is undefined or null:', result);
+                alert('Gagal memilih gambar. Silakan coba lagi.'); // Tampilkan pesan kesalahan jika URI tidak ada
+                return;
+            }
+    
+            // Jika berhasil, set gambar ke state image
+            setImage(result.assets[0].uri);
+            console.log('Image URI:', result.assets[0].uri); // Tampilkan URI gambar yang dipilih
         } catch (error) {
             console.error('Error picking image:', error);
+            alert('Gagal memilih gambar. Silakan coba lagi.'); // Tangani kesalahan saat memilih gambar
         }
     };
 
@@ -85,9 +102,9 @@ const EditProfil = () => {
         }
 
         // Validasi gambar
-        // if (!image) {
-        //     isValid = false;
-        // }
+        if (!image) {
+            isValid = false;
+        }
 
         return isValid;
     };
@@ -101,6 +118,7 @@ const EditProfil = () => {
                     alamat: alamat,
                     nohp: nohp,
                     status: status,
+                    image:image,
                     // Tambahkan atribut lain jika diperlukan
                 };
 
@@ -122,22 +140,22 @@ const EditProfil = () => {
         <ScrollView backgroundColor={'white'}>
             <Box bgColor={'white'}>
                 <Box mt={3} height={130} borderRadius={10}>
-                    <Avatar alignSelf={'center'} size="120" bg="blue.500" source={require("../assets/profile.png")} />
+                <Avatar alignSelf={'center'} size="120" bg="blue.500" source={image ? { uri: image } : require("../assets/profile.jpg")} />
                 </Box>
 
                 <Box px={4} pb={10}>
-                    <Heading fontSize={13} fontWeight={'extrabold'}  mb={2} color={'#636EFC'}>Nama Lengkap</Heading>
-                    <Input value={profile && profile.nama ? profile.nama : "-"} placeholder="Masukkan Nama Lengkap" isDisabled={profile && profile.nama ? true : false}  placeholderTextColor={'#636EFC'} />
-                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Username</Heading>
-                    <Input value={email} placeholder="Masukkan Email" isDisabled={email ? true : false} placeholderTextColor={'#636EFC'} />
-                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Alamat</Heading>
-                    <Input value={alamat} placeholder="Masukkan Alamat"  onChangeText={(text) => setAlamat(text)}  placeholderTextColor={'#636EFC'} />
-                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Nomor Handphone</Heading>
-                    <Input value={nohp}  onChangeText={(text) => setNohp(text)} placeholder="Masukkan Nomor Handphone" placeholderTextColor={'#636EFC'} />
-                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Status</Heading>
-                    <Input value={status} isDisabled={status ? true : false} onChangeText={(text) => setStatus(text)} placeholder="Status Kerja" placeholderTextColor={'#636EFC'} />
-                    {/* <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Upload Foto</Heading> */}
-                    {/* <Button backgroundColor={'#0066FF'} onPress={pickImage}>
+                    <Heading fontSize={13} fontWeight={'extrabold'}  mb={2} color={'#181059'}>Nama Lengkap</Heading>
+                    <Input value={profile && profile.nama ? profile.nama : "-"} placeholder="Masukkan Nama Lengkap" isDisabled={profile && profile.nama ? true : false}  placeholderTextColor={'#181059'} />
+                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#181059'}>Username</Heading>
+                    <Input value={email} placeholder="Masukkan Email" isDisabled={email ? true : false} placeholderTextColor={'#181059'} />
+                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#181059'}>Alamat</Heading>
+                    <Input value={alamat} placeholder="Masukkan Alamat"  onChangeText={(text) => setAlamat(text)}  placeholderTextColor={'#181059'} />
+                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#181059'}>Nomor Handphone</Heading>
+                    <Input value={nohp}  onChangeText={(text) => setNohp(text)} placeholder="Masukkan Nomor Handphone" placeholderTextColor={'#181059'} />
+                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#181059'}>Status</Heading>
+                    <Input value={status} isDisabled={status ? true : false} onChangeText={(text) => setStatus(text)} placeholder="Status Kerja" placeholderTextColor={'#181059'} />
+                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#181059'}>Upload Foto</Heading>
+                    <Button backgroundColor={'#181059'} onPress={pickImage}>
                         <Text fontWeight="bold" color="white">Pilih Gambar</Text>
                     </Button>
                     {image && (
@@ -147,11 +165,11 @@ const EditProfil = () => {
                             size="lg"
                             resizeMode="cover"
                         />
-                    )} */}
+                    )}
                     <Pressable onPress={onUpdate} >
                         <Box
                             mt={3}
-                            backgroundColor={'#0066FF'}
+                            backgroundColor={'#181059'}
                             borderRadius={5}
                             alignItems={'center'}
                             

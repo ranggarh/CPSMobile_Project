@@ -1,39 +1,6 @@
 import FIREBASE from '../config/FIREBASE';
 import { getData } from '../utils/localStorage'; // Tambahkan impor ini
 
-// export const tambahIzinAbsen = async (izinData) => {
-//   try {
-//     const userData = await getData('user');
-//     const uid = userData.uid;
-
-//     // Upload foto bukti ke Firebase Storage
-//     const fotoUri = izinData.buktiFoto;
-//     const response = await fetch(fotoUri);
-//     const blob = await response.blob();
-//     const fotoRef = storage.ref().child(`bukti/${uid}_${Date.now()}`);
-//     await fotoRef.put(blob);
-
-//     // Dapatkan URL foto yang diupload
-//     const fotoUrl = await fotoRef.getDownloadURL();
-
-//     // Tambahkan data izin ke Firebase Database
-//     await db.ref(`absensi/${uid}`).push({
-//       tanggal: izinData.tanggal,
-//       nama: izinData.nama,
-//       jabatan: izinData.jabatan,
-//       alasan: izinData.alasan,
-//       buktiFoto: fotoUrl,
-//       status: 'izin',
-//     });
-
-//     return true;
-//   } catch (error) {
-//     console.error('Error menambahkan izin absen:', error);
-//     throw error;
-//   }
-// };
-
-
 export const tambahIzinAbsen = async (izinData) => {
   try {
       const userData = await getData('user');
@@ -47,10 +14,15 @@ export const tambahIzinAbsen = async (izinData) => {
       await fotoRef.put(blob);
 
       // Dapatkan URL foto yang diupload
+      const waktu = new Date();
       const fotoUrl = await fotoRef.getDownloadURL();
+      const hari = waktu.toLocaleString('id-ID', { weekday: 'long' });
+      const waktuIzin = waktu.toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
 
       // Tambahkan data izin ke Firebase Database
       await FIREBASE.database().ref(`absensi/${uid}`).push({
+          hari: hari,
+          waktuIzin: waktuIzin,
           nama: izinData.nama,
           jabatan: izinData.status,
           alasan: izinData.alasan,
@@ -75,7 +47,7 @@ export const tambahAbsensi = async (lokasi, waktu) => {
 
         // Tentukan batas waktu maksimal untuk masuk (07:15 pagi WIB)
         const batasWaktuMasuk = new Date();
-        batasWaktuMasuk.setHours(2, 0, 0, 0); // Set jam 07:15 pagi
+        batasWaktuMasuk.setHours(10, 0, 0, 0); // Set jam 07:15 pagi
         const waktuMasuk = waktu.toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
 
         // Tentukan status berdasarkan waktu masuk
@@ -135,12 +107,47 @@ export const getAbsensiData = async () => { // Mengganti nama fungsi menjadi get
   }
 };
 // Fungsi untuk memperbarui waktu pulang di setiap entri absen masuk
+// export const updateAbsensiPulang = async (lokasi, waktu, userLocation) => {
+//   try {
+//     const userData = await getData('user');
+//     const uid = userData.uid;
+
+//     // Mendapatkan data absen masuk terakhir
+//     const absensiRef = await FIREBASE.database().ref(`absensi/${uid}`).orderByKey().limitToLast(1).once('value');
+//     const absensiData = absensiRef.val();
+
+//     if (!absensiData) {
+//       console.error('Tidak ada data absensi yang ditemukan');
+//       throw new Error('Tidak ada data absensi yang ditemukan');
+//     }
+
+//     const lastAbsensiKey = Object.keys(absensiData)[0];
+
+//     // Periksa apakah absen masuk terakhir sudah memiliki waktu pulang
+//     if (absensiData[lastAbsensiKey].waktuPulang) {
+//       console.log('Absen masuk terakhir sudah memiliki waktu pulang');
+//       return false;
+//     }
+
+//     // Update waktu pulang dan lokasi pulang di absen masuk terakhir
+//     await FIREBASE.database().ref(`absensi/${uid}/${lastAbsensiKey}`).update({
+//       waktuPulang: waktu.toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' }),
+//       lokasiPulang: lokasi,
+//     });
+
+//     return true;
+//   } catch (error) {
+//     console.error('Error memperbarui data absensi pulang:', error);
+//     throw error;
+//   }
+// };
+
 export const updateAbsensiPulang = async (lokasi, waktu, userLocation) => {
   try {
     const userData = await getData('user');
     const uid = userData.uid;
 
-    // Mendapatkan data absen masuk terakhir
+    // Mendapatkan data absensi masuk terakhir
     const absensiRef = await FIREBASE.database().ref(`absensi/${uid}`).orderByKey().limitToLast(1).once('value');
     const absensiData = absensiRef.val();
 
@@ -150,14 +157,20 @@ export const updateAbsensiPulang = async (lokasi, waktu, userLocation) => {
     }
 
     const lastAbsensiKey = Object.keys(absensiData)[0];
+    const lastAbsensi = absensiData[lastAbsensiKey];
 
-    // Periksa apakah absen masuk terakhir sudah memiliki waktu pulang
-    if (absensiData[lastAbsensiKey].waktuPulang) {
-      console.log('Absen masuk terakhir sudah memiliki waktu pulang');
+    // Periksa apakah absensi masuk terakhir memenuhi syarat untuk update pulang
+    if (lastAbsensi.status === 'Izin') {
+      console.log('Absensi masuk terakhir adalah status Izin, tidak bisa update pulang');
       return false;
     }
 
-    // Update waktu pulang dan lokasi pulang di absen masuk terakhir
+    if (lastAbsensi.waktuPulang) {
+      console.log('Absensi masuk terakhir sudah memiliki waktu pulang');
+      return false;
+    }
+
+    // Update waktu pulang dan lokasi pulang di absensi masuk terakhir
     await FIREBASE.database().ref(`absensi/${uid}/${lastAbsensiKey}`).update({
       waktuPulang: waktu.toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' }),
       lokasiPulang: lokasi,
@@ -170,11 +183,16 @@ export const updateAbsensiPulang = async (lokasi, waktu, userLocation) => {
   }
 };
 
+
+
 export const getRiwayatAbsensi = async () => {
   try {
     // Mendapatkan data user dari local storage
     const userData = await getData('user');
     const uid = userData.uid;
+    const waktu = new Date();
+    const hari = waktu.toLocaleString('id-ID', { weekday: 'long' });
+    const waktuIzin = waktu.toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
 
     // Mendapatkan snapshot dari data absensi pengguna
     const absensiSnapshot = await FIREBASE.database().ref(`absensi/${uid}`).once('value');
@@ -201,9 +219,8 @@ export const getRiwayatAbsensi = async () => {
         absensiArray.push({
           nama: userData.nama, // Anda perlu menambahkan properti nama dalam data user
           jenis: 'Izin', // Tambahkan jenis untuk membedakan dengan data absensi
-          hari: absensi.hari,
-          waktuMasuk: absensi.waktuMasuk,
-          waktuPulang: absensi.waktuPulang || '-', // Jika waktuPulang tidak ada, ganti dengan tanda strip (-)
+          hari: hari,
+          waktuIzin: waktuIzin,
           status: absensi.status,
           alasan: absensi.alasan, // Contoh: Anda bisa menambahkan alasan izin ke dalam riwayat
           buktiFoto: absensi.buktiFoto, // Contoh: URL foto bukti izin

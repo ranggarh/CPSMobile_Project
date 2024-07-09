@@ -24,6 +24,8 @@ const IzinKerja = () => {
             const userData = await getData('user');
             setProfile(userData);
             setStatus(userData.status);
+            setImage(userData.image);
+            
         } catch (error) {
             console.error('Error fetching user data:', error);
         }
@@ -105,6 +107,7 @@ const pickImage = async () => {
             setImage(null); // Reset input gambar setelah berhasil menambahkan izin
 
             alert('Izin berhasil ditambahkan!');
+            navigation.navigate('Home');
         } catch (error) {
             console.error('Error menambahkan izin absen:', error);
             alert('Gagal menambahkan izin absen. Silakan coba lagi.');
@@ -116,17 +119,17 @@ const pickImage = async () => {
         <ScrollView backgroundColor={'white'}>
             <Box bgColor={'white'}>
                 <Box mt={3} height={130} borderRadius={10}>
-                    <Avatar alignSelf={'center'} size="120" bg="blue.500" source={require("../assets/profile.png")} />
+                    <Avatar alignSelf={'center'} size="120" bg="blue.500" source={image ? { uri: image } : require("../assets/profile.jpg")} />
                 </Box>
                 <Box px={4} pb={10}>
-                    <Heading fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Nama Lengkap</Heading>
+                    <Heading fontSize={13} fontWeight={'extrabold'} mb={2} color={'#181059'}>Nama Lengkap</Heading>
                     <Input value={profile && profile.nama ? profile.nama : "-"} placeholder="Masukkan Nama Lengkap" isDisabled={true} placeholderTextColor={'#636EFC'} />
-                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Status</Heading>
+                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#181059'}>Status</Heading>
                     <Input value={status} isDisabled={true} onChangeText={(text) => setStatus(text)} placeholderTextColor={'#636EFC'} />
-                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Alasan</Heading>
-                    <Input value={alasan} onChangeText={(text) => setAlasan(text)} placeholder="Masukkan Alasan" placeholderTextColor={'#636EFC'} />
-                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#636EFC'}>Upload Foto</Heading>
-                    <Button backgroundColor={'#0066FF'} onPress={pickImage}>
+                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#181059'}>Alasan</Heading>
+                    <Input value={alasan} onChangeText={(text) => setAlasan(text)} placeholder="Masukkan Alasan" placeholderTextColor={'#181059'} />
+                    <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#181059'}>Upload Foto</Heading>
+                    <Button backgroundColor={'#181059'} onPress={pickImage}>
                         <Text fontWeight="bold" color="white">Pilih Gambar</Text>
                     </Button>
                     {image && (
@@ -140,7 +143,7 @@ const pickImage = async () => {
                     <Pressable onPress={handleTambahIzin}>
                         <Box
                             mt={3}
-                            backgroundColor={'#0066FF'}
+                            backgroundColor={'#181059'}
                             borderRadius={5}
                             alignItems={'center'}
                         >

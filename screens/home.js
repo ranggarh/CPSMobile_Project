@@ -5,6 +5,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { getData } from "../src/utils/localStorage";
 import { getAbsensiData, getTopTercepat } from "../src/actions/absensi_actions";
+import faqData from "../faq";
+import faq from "../faq";
 
 const Home = () => {
     const [currentTime, setCurrentTime] = useState(new Date());
@@ -13,6 +15,8 @@ const Home = () => {
     const [absensiData, setAbsensiData] = useState({});
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [topTercepat, setTopTercepat] = useState([]);
+    const [status, setStatus] = useState(null);
+    const [image, setImage] = useState(null);
 
     const fetchAbsensiData = async () => {
         try {
@@ -28,6 +32,8 @@ const Home = () => {
           .then(res => {
             // console.log('User Data:', res);
             setProfile(res);
+            setStatus(res.status);
+            setImage(res.image);
           })
           .catch(error => {
             console.error('Error fetching user data:', error);
@@ -80,24 +86,7 @@ const Home = () => {
         fetchData();
     }, []);
 
-    const limitedTopTercepat = topTercepat.slice(0, 4).reverse();
-
-    const renderItem = ({ item }) => {
-        const waktuMasuk = item.waktuMasuk.split(' ')[1];
-        const waktuPulang = item.waktuPulang.split(' ')[1];
-
-        return (
-            <Pressable>
-                <Box mb={2}  px={5}>
-                    <Box borderRadius={8} backgroundColor={'white'} p={4} flexDirection={'row'} justifyContent={'space-between'}>
-                        <Text fontWeight={'regular'}  numberOfLines={1} ellipsizeMode="tail" style={{ maxWidth: '45%' }}>{item.nama}</Text>
-                        <Text fontWeight={'regular'} ml={3} textAlign={'left'} >{waktuMasuk || "-"}</Text>
-                        <Text fontWeight={'regular'} color={item.status === "Masuk" ? "green.500" : "red.500"}>{item.status}</Text>
-                    </Box>
-                </Box>
-            </Pressable>
-        );
-    };
+    
 
     const renderHeader = () => (
         <>
@@ -108,7 +97,7 @@ const Home = () => {
                 </Box>
                 <Box padding={5}>
                     <Box  mr={2} alignItems={'center'} borderRadius={'1'}>
-                        <Avatar size="sm" bg="blue.500" source={require("../assets/profile.png")} />
+                        <Avatar size="sm" bg="blue.500" source={image ? { uri: image } : require("../assets/profile.jpg")} />
                     </Box>
                 </Box>
             </Box>
@@ -120,7 +109,7 @@ const Home = () => {
                     <Text color={'white'} fontSize={12}>Selamat Datang</Text>
                     <Text color={'white'} fontWeight={'bold'} mb={2} numberOfLines={1} ellipsizeMode="tail" style={{ maxWidth: '75%' }}>{profile && profile.nama ? profile.nama : "No Name"}</Text>
                     <Box p={2} backgroundColor={'white'} width={'75'} borderRadius={5}>
-                        <Text alignSelf={'center'} fontWeight={'bold'}>Staff IT</Text>
+                        <Text alignSelf={'center'} fontWeight={'bold'}>{status ? status : "-" }</Text>
                     </Box>
                 </Box>
             </Box>
@@ -135,20 +124,20 @@ const Home = () => {
                         <Text fontWeight={'bold'} top={4} right={4} color={'white'}>{formattedDate}</Text>
                     </Box>
                     
-                    <Box flex={1} py={5} mx={4} flexDirection={'row'}>
-                        <Box mt={2} ml={2} mr={1} p={2} width={75} height={65} backgroundColor={'white'} borderRadius={5}>
+                    <Box flex={1} py={5} mx={4} flexDirection={'row'} >
+                        <Box mt={2} m={1} p={2} width={75} height={65} backgroundColor={'white'} borderRadius={5}>
                             <Text fontSize={10} fontWeight={'bold'} mt={-1}>Masuk</Text>
-                            <Text fontWeight={'bold'} flex={1}  textAlign={'center'} fontSize={25}>{absensiData[profile?.uid] ? absensiData[profile?.uid].masuk : 0}</Text>
+                            <Text fontWeight={'bold'} flex={1} textAlign={'center'} fontSize={25}>{absensiData[profile?.uid] ? absensiData[profile?.uid].masuk : 0}</Text>
                         </Box>
-                        <Box mt={2} ml={1} mr={1} p={2} width={75} height={65} backgroundColor={'white'} borderRadius={5}>
+                        <Box mt={2} m={1} p={2} width={75} height={65} backgroundColor={'white'} borderRadius={5}>
                             <Text fontSize={10} fontWeight={'bold'} mt={-1}>Alpha</Text>
                             <Text fontWeight={'bold'} flex={1} textAlign={'center'} fontSize={25}>{absensiData[profile?.uid] ? absensiData[profile?.uid].alpa : 0}</Text>
                         </Box>
-                        <Box mt={2} ml={1} mr={1} p={2} width={75} height={65} backgroundColor={'white'} borderRadius={5}>
+                        <Box mt={2} m={1} p={2} width={75} height={65} backgroundColor={'white'} borderRadius={5}>
                             <Text fontSize={10} fontWeight={'bold'} mt={-1}>Izin Kerja</Text>
-                            <Text fontWeight={'bold'} flex={1}  textAlign={'center'} fontSize={25}>{absensiData[profile?.uid] ? absensiData[profile?.uid].izin : 0}</Text>
+                            <Text fontWeight={'bold'} flex={1} textAlign={'center'} fontSize={25}>{absensiData[profile?.uid] ? absensiData[profile?.uid].izin : 0}</Text>
                         </Box>
-                        <Box  ml={1} mt={1} p={2} width={75} height={65} borderRadius={5}>
+                        <Box  mx={'auto'} ml={-1} mt={1} p={2} width={75} height={65} borderRadius={5}>
                             <Pressable onPress={() => navigation.navigate('Riwayat')}>
                                 <Ionicons size={45} color={'white'} name="newspaper"></Ionicons>
                                 <Text color={'white'} fontSize={11} ml={1} fontWeight={'bold'}>Riwayat</Text>
@@ -170,23 +159,34 @@ const Home = () => {
                         </Pressable>
                 </Box>
             </Box>
-            <Heading m={5} mt={1} fontSize={16}>Presensi Terkini</Heading>
+            <Heading m={5} mt={1} fontSize={16}>Informasi Penggunaan Aplikasi</Heading>
         </>
     );
 
-    const renderFooter = () => (
-        <Box m={3}mt={-2} borderRadius={10} p={3} backgroundColor={'#EEEEEE'}>
-        </Box>
-    );
+    const renderItem = ({ item }) => {
+        return (
+            <Pressable onPress={() => navigation.navigate('Detail FAQ', { faq: item })}>
+                <Box mb={2} px={5}>
+                    <Box borderRadius={8} backgroundColor={'white'} p={4} flexDirection={'row'} justifyContent={'space-between'}>
+                        <Text fontWeight={'medium'}>{item.nama}</Text>
+                    </Box>
+                </Box>
+            </Pressable>
+        );
+    };
+    
+
+
+    
 
     return (
         <FlatList
-            data={limitedTopTercepat}
+            data={faqData}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={renderHeader}
-            ListFooterComponent={renderFooter}
+            
             refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />}
         />
     );
