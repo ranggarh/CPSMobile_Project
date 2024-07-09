@@ -24,7 +24,6 @@ const IzinKerja = () => {
             const userData = await getData('user');
             setProfile(userData);
             setStatus(userData.status);
-            setImage(userData.image);
             
         } catch (error) {
             console.error('Error fetching user data:', error);
@@ -119,9 +118,9 @@ const pickImage = async () => {
         <ScrollView backgroundColor={'white'}>
             <Box bgColor={'white'}>
                 <Box mt={3} height={130} borderRadius={10}>
-                    <Avatar alignSelf={'center'} size="120" bg="blue.500" source={image ? { uri: image } : require("../assets/profile.jpg")} />
+                <Image m={1} alignSelf={'center'} source={require('../assets/icon_helpdesk.png')} style={{ width: 200, height: 150, borderRadius: 10 }} alt="Selamat Datang ICON"></Image>
                 </Box>
-                <Box px={4} pb={10}>
+                <Box px={4} py={10} pb={10}>
                     <Heading fontSize={13} fontWeight={'extrabold'} mb={2} color={'#181059'}>Nama Lengkap</Heading>
                     <Input value={profile && profile.nama ? profile.nama : "-"} placeholder="Masukkan Nama Lengkap" isDisabled={true} placeholderTextColor={'#636EFC'} />
                     <Heading mt={4} fontSize={13} fontWeight={'extrabold'} mb={2} color={'#181059'}>Status</Heading>

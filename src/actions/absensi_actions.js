@@ -47,7 +47,7 @@ export const tambahAbsensi = async (lokasi, waktu) => {
 
         // Tentukan batas waktu maksimal untuk masuk (07:15 pagi WIB)
         const batasWaktuMasuk = new Date();
-        batasWaktuMasuk.setHours(10, 0, 0, 0); // Set jam 07:15 pagi
+        batasWaktuMasuk.setHours(18, 0, 0, 0); // Set jam 07:15 pagi
         const waktuMasuk = waktu.toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
 
         // Tentukan status berdasarkan waktu masuk

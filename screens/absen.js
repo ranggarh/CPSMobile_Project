@@ -118,7 +118,7 @@ const Absen = () => {
 
         const distance = getDistance(userLocation, locationToCheck);
   
-        if (distance <= 50000) {
+        if (distance <= 500) {
           await tambahAbsensi(selectedLocation, currentTime);
           ToastAndroid.show('Berhasil Absen Masuk', ToastAndroid.SHORT);
         } else {
